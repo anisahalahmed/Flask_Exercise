@@ -1,9 +1,30 @@
 {% block content %}
-<h1>Student Details</h1>
-<table>
-    {%for key,value in studentOrganisationDetails.items()%}
+    <h1>Student Details</h1>
+    <table style="width: 100%">
+            <tr>
+                <td style="font-weight: bold;">
+                    Name
+                </td>
+                <td style="font-weight: bold;">
+                    Organisation
+                </td>
+            </tr>
+        {%for key,value in studentOrganisationDetails.items()%}
+            <tr>
+                <td>
+                    {{ key }}
+                </td>
+                <td>
+                    {{ value }}
+                </td>
+            </tr>
+        {%endfor%}
+    </table>
 
-    {%endfor%}
-</table>
-
+    <style>
+        td {
+            width: 50%;
+            text-align: center;
+        }
+    </style>
 {% endblock %}

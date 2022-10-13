@@ -3,8 +3,16 @@ from urllib import request
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
-global studentOrganisationDetails
-# Assign default 5 values to studentOrganisationDetails for Application  3.
+
+organizations = [
+    "High-End shoppers",
+    "Haute Couture shoppers",
+    "Fast-Fashion shoppers",
+    "My-Sister's-Closet shoppers",
+    "Small business shoppers"
+]
+
+studentOrganisationDetails = {}
 
 
 @app.get('/')
@@ -42,15 +50,20 @@ def checkNumber():
 
 @app.get('/addStudentOrganisation')
 def displayStudentForm():
-    # Complete this function to display studentFrom.html page
-    pass
+
+    return render_template('studentForm.html')
 
 
 @app.route('/addStudentOrganisation', methods=['POST'])
 def displayRegistrationPage():
     # Get student name and organisation from form.
-    studentName = request.form['name']
+    studentName = request.form.get('name')
+    org = request.form.get('org')
 
-    # Append this value to studentOrganisationDetails
+    # Validation
+    assert studentName is not None and studentName != ""
+    assert org is not None and org in organizations
 
-    # Display studentDetails.html with all students and organisations
+    studentOrganisationDetails[studentName] = org
+
+    return render_template('StudentDetails.html', studentOrganisationDetails=studentOrganisationDetails)
