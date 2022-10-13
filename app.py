@@ -15,8 +15,7 @@ def index():
 
 @app.get('/calculate')
 def displayNumberPage():
-    # Complete this function to display form.html page
-    pass
+    return render_template('form.html')
 
 
 @app.route('/calculate', methods=['POST'])
@@ -26,10 +25,19 @@ def checkNumber():
     # Display "Number {Number} is odd" if given number is odd on result.html page
     # Display "No number provided" if value is null or blank on result.html page
     # Display "Provided input is not an integer!" if value is not a number on result.html page
-    global number
-    number = request.form['number']
+    number = request.form.get('number')
+    if number is None or number == "":
+        result = "No number provided"
+    elif number.isdecimal():
+        number = int(number)
+        if number % 2 == 0:
+            result = "Number " + str(number) + " is even"
+        else:
+            result = "Number " + str(number) + " is odd"
+    else:
+        result = "Provided input is not an integer!"
 
-    # Write your to code here to check whether number is even or odd and render result.html page
+    return render_template('result.html', result=result)
 
 
 @app.get('/addStudentOrganisation')
